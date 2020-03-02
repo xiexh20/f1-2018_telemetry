@@ -13,8 +13,10 @@
 #define _XTAL_FREQ 48000000   // define Fosc frequency in order to use delay function
 
 #define IDLE 0
-#define RxADDR 1 // receiving address byte
-#define RxDATA 2    // receiving data byte
+#define I2CTxing 1      // the I2C module is sending data out
+#define I2CRxing 2      // the I2C module is receiving data in
+//#define RxADDR 1 // receiving address byte
+//#define RxDATA 2    // receiving data byte
 
 #define BIT0 0x01
 #define BIT1 0x02
@@ -25,6 +27,13 @@
 #define BIT6 0x40
 #define BIT7 0x80
 
+#define FRAME_LEN 10    // the length of the data frame
+typedef unsigned char uchar;
+
+typedef struct buffer{
+    uchar data[FRAME_LEN];       // data buffer
+    uchar idx;      // index of the byte to be sent/just received
+}buffer_t;
 
 void init_Chip();
 void init_I2C();
@@ -36,17 +45,24 @@ unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = IDLE; // receiving status
 
+buffer_t Txbuf;      // store data to be sent out (fill ADC data in this variable)
+buffer_t Rxbuf;     // store received data frame
+uchar I2Cstatus = IDLE;     // status of the I2C module, either IDLE, sending data out or receiving data in
+
 void main(void) 
 {
     init_Chip();
     init_I2C();
+    
+    // init buffer
+    Txbuf.idx = 0;
+    Rxbuf.idx = 0;
     
     INTCONbits.GIE = 1;	// Turn on global interrupt
     LATB = 0;
     LATA = 0;
     while(1)
     {
-//        LATA = data;
         __delay_ms(1); 
         
 //        LATBbits.LATB6 ^= 1;
@@ -55,7 +71,6 @@ void main(void)
 //        }
         
         data_past = data;
-//        LATA = data;
         
     }
 }
@@ -72,7 +87,6 @@ void init_Chip()
     LATC = 0x00; //Initial PORTC
     TRISC = 0x00; //Define PORTC as output
 	INTCONbits.GIE = 0;	// Turn Off global interrupt
-//    INTCONbits.TMR0IE = 1;
 }
 
 void init_I2C()
@@ -84,9 +98,7 @@ void init_I2C()
     SSPADD = SLAVE_ADDR;
     SSPCON1 = 0x36; // slave mode
     SSPSTAT = 0x80;     // 
-//    SSPCON2 = 0x00;     // clock stretching disabled
     SSPCON2 = 0x01;     // clock stretching enabled
-//    SSPCON3 = 0x00;     //enable start and stop bit interrupt or not
     
     PIE1bits.SSPIE = 1;         // enable SPI interrupt
     INTCONbits.PEIE = 1;    //enable peripheral interrupt
@@ -106,87 +118,37 @@ void writePortB(unsigned char data)
 void __interrupt (high_priority) high_ISR(void)
 {       
 //    LATBbits.LATB5 ^= 1;
-//    LATA = 0xFF;
     if(PIR1bits.SSPIF==1){
         // serial transmission interrupt
-//        if(RxStatus==IDLE){
-//            // start receive address byte
-//            RxStatus = RxADDR;
-//            SSPSTATbits.S = 0;
-//        }
-//        else if(RxStatus==RxADDR){
-//            // address byte is received
-//            
-//            RxStatus = RxDATA;
-//            
-//            SSPCON1bits.CKP = 1;        // set CKP bit manually
-//        }
-//        else if(RxStatus==RxDATA){
-//            
-//            data = SSPBUF;
-//            LATA = SSPBUF;
-//            SSPCON1bits.CKP = 1;        // set CKP bit manually
-//        }
-        
-//        if ((SSPCONbits.SSPOV) || (SSPCONbits.WCOL))
-//        {
-//          addr = SSPBUF; // Read the previous value to clear the buffer
-//          SSPCONbits.SSPOV = 0; // Clear the overflow flag
-//          SSPCONbits.WCOL = 0;  // Clear the collision bit
-//          
-//        }
-//        
-//        if(!SSPSTATbits.D_nA && !SSPSTATbits.R_nW)
-//        {
-//          data = SSPBUF;
-//          while(!SSPSTATbits.BF);
-//          
-//          
-//        }
-//        else if(!SSPSTATbits.D_nA && SSPSTATbits.R_nW)
-//        {
-////          z = SSPBUF;
-//          BF = 0;
-//          SSPBUF = sent ;
-//          
-//          while(SSPSTATbits.BF);
-//        }
-        
+
         if(SSPSTATbits.R_nW){
+            // slave transmission mode: send data out
             LATCbits.LATC7 = 1;
             
             data--;
-            SSPBUF = data;
+            SSPBUF = data;  // send data out
             LATA = data;
-//            sent++;
         }
         else{
+            // slave reception mode: read data from the SSPBUF
             LATCbits.LATC7 = 0;
         }
 
 
         if((SSPSTAT&BIT5)==0){
-//            LATBbits.LATB7 = 1;
+            // an address byte is received
             addr = SSPBUF;
-//            LATA = SSPSTAT;
-//            writePortB(SSPBUF);
         }
         else{
-//            LATBbits.LATB6 = 1;
-            
+            // a data byte is received
             data = SSPBUF;
-//            LATA = data;
-//            LATA = SSPSTAT;
-//            writePortB(SSPBUF);
         }
         
 //        writePortB(addr);
 //        writePortB(SSPSTAT);
         
-//        LATA = SSPBUF;
         SSPCON1bits.SSPOV = 0; // Clear the overflow flag
         SSPCON1bits.WCOL = 0;  // Clear the collision bit
-//        LATBbits.LATB4 ^= 1;
         PIR1bits.SSPIF = 0;     // don't forget to clear flag
         SSPCON1bits.CKP = 1;        // set CKP bit manually(ACK to master)
         

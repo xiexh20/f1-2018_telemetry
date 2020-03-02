@@ -7578,7 +7578,14 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "C:\\Program Files (x86)\\Microchip\\xc8\\v2.10\\pic\\include\\xc.h" 2 3
 # 9 "I2C_slave.c" 2
-# 29 "I2C_slave.c"
+# 31 "I2C_slave.c"
+typedef unsigned char uchar;
+
+typedef struct buffer{
+    uchar data[10];
+    uchar idx;
+}buffer_t;
+
 void init_Chip();
 void init_I2C();
 void writePortB(unsigned char data);
@@ -7589,17 +7596,24 @@ unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = 0;
 
+buffer_t Txbuf;
+buffer_t Rxbuf;
+uchar I2Cstatus = 0;
+
 void main(void)
 {
     init_Chip();
     init_I2C();
+
+
+    Txbuf.idx = 0;
+    Rxbuf.idx = 0;
 
     INTCONbits.GIE = 1;
     LATB = 0;
     LATA = 0;
     while(1)
     {
-
         _delay((unsigned long)((1)*(48000000/4000.0)));
 
 
@@ -7608,7 +7622,6 @@ void main(void)
 
 
         data_past = data;
-
 
     }
 }
@@ -7625,7 +7638,6 @@ void init_Chip()
     LATC = 0x00;
     TRISC = 0x00;
  INTCONbits.GIE = 0;
-
 }
 
 void init_I2C()
@@ -7637,9 +7649,7 @@ void init_I2C()
     SSPADD = 0x40;
     SSPCON1 = 0x36;
     SSPSTAT = 0x80;
-
     SSPCON2 = 0x01;
-
 
     PIE1bits.SSPIE = 1;
     INTCONbits.PEIE = 1;
@@ -7659,18 +7669,19 @@ void writePortB(unsigned char data)
 void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
 {
 
-
     if(PIR1bits.SSPIF==1){
-# 155 "I2C_slave.c"
+
+
         if(SSPSTATbits.R_nW){
+
             LATCbits.LATC7 = 1;
 
             data--;
             SSPBUF = data;
             LATA = data;
-
         }
         else{
+
             LATCbits.LATC7 = 0;
         }
 
@@ -7678,25 +7689,17 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         if((SSPSTAT&0x20)==0){
 
             addr = SSPBUF;
-
-
         }
         else{
 
-
             data = SSPBUF;
-
-
-
         }
-
 
 
 
 
         SSPCON1bits.SSPOV = 0;
         SSPCON1bits.WCOL = 0;
-
         PIR1bits.SSPIF = 0;
         SSPCON1bits.CKP = 1;
 
