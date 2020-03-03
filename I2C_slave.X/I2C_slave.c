@@ -15,8 +15,7 @@
 #define IDLE 0
 #define I2CTxing 1      // the I2C module is sending data out
 #define I2CRxing 2      // the I2C module is receiving data in
-//#define RxADDR 1 // receiving address byte
-//#define RxDATA 2    // receiving data byte
+#define FRAME_LEN 10    // the length of the data frame
 
 #define BIT0 0x01
 #define BIT1 0x02
@@ -27,9 +26,11 @@
 #define BIT6 0x40
 #define BIT7 0x80
 
-#define FRAME_LEN 10    // the length of the data frame
+
+
 typedef unsigned char uchar;
 
+// a buffer struct for reception and transmission
 typedef struct buffer{
     uchar data[FRAME_LEN];       // data buffer
     uchar idx;      // index of the byte to be sent/just received
@@ -45,7 +46,7 @@ unsigned char sent = 0x11;
 unsigned char data_past = 0;
 unsigned char RxStatus = IDLE; // receiving status
 
-buffer_t Txbuf;      // store data to be sent out (fill ADC data in this variable)
+buffer_t Txbuf;      // store data to be sent out (fill ADC and other data in this buffer)
 buffer_t Rxbuf;     // store received data frame
 uchar I2Cstatus = IDLE;     // status of the I2C module, either IDLE, sending data out or receiving data in
 
@@ -64,13 +65,6 @@ void main(void)
     while(1)
     {
         __delay_ms(1); 
-        
-//        LATBbits.LATB6 ^= 1;
-//        if(data_past != data){
-//            LATBbits.LATB3 ^= 1;
-//        }
-        
-        data_past = data;
         
     }
 }
@@ -117,15 +111,8 @@ void writePortB(unsigned char data)
 **********************************************************/
 void __interrupt (high_priority) high_ISR(void)
 {       
-//    LATBbits.LATB5 ^= 1;
     if(PIR1bits.SSPIF==1){
         // serial transmission interrupt
-        
-//        if(I2Cstatus==I2CRxing){
-//            data = SSPBUF;
-//            writePortB(data);
-//            I2Cstatus = IDLE;
-//        }
         
         if((SSPSTAT&BIT5)==0){
             // an address byte is received
@@ -147,14 +134,6 @@ void __interrupt (high_priority) high_ISR(void)
                         Txbuf.idx = 0;      // reset 
                     }
                 }
-//                else{
-//                    I2Cstatus = IDLE;
-//                    Txbuf.idx = 0;      // reset to the start
-//                }
-//                sent--;
-//                SSPBUF = sent;  // send data out
-//                LATA = sent;
-//                I2Cstatus = I2CRxing;
             }
             else{
                 // slave reception mode
@@ -165,7 +144,6 @@ void __interrupt (high_priority) high_ISR(void)
         else{
             // a data byte is received
             if((I2Cstatus==I2CRxing)&&(Rxbuf.idx<FRAME_LEN)){
-//                data = SSPBUF;
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
                 writePortB(Rxbuf.data[Rxbuf.idx]);
                 Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
@@ -177,27 +155,13 @@ void __interrupt (high_priority) high_ISR(void)
             }
             else{
                 I2Cstatus = IDLE;
-                Rxbuf.idx = 0;      // clear to the start
+                Rxbuf.idx = 0;      // reset the receive buffer index
             }
         }
-        
-        
 
-
-//        if((SSPSTAT&BIT5)==0){
-//            // an address byte is received
-//            addr = SSPBUF;
-//        }
-//        else{
-//            // a data byte is received
-//            data = SSPBUF;
-//        }
-        
-        
         SSPCON1bits.SSPOV = 0; // Clear the overflow flag
         SSPCON1bits.WCOL = 0;  // Clear the collision bit
         PIR1bits.SSPIF = 0;     // don't forget to clear flag
         SSPCON1bits.CKP = 1;        // set CKP bit manually(ACK to master)
-        
     }
 }

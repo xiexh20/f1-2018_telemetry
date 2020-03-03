@@ -7581,6 +7581,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 31 "I2C_slave.c"
 typedef unsigned char uchar;
 
+
 typedef struct buffer{
     uchar data[10];
     uchar idx;
@@ -7615,13 +7616,6 @@ void main(void)
     while(1)
     {
         _delay((unsigned long)((1)*(48000000/4000.0)));
-
-
-
-
-
-
-        data_past = data;
 
     }
 }
@@ -7668,9 +7662,9 @@ void writePortB(unsigned char data)
 
 void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
 {
-
     if(PIR1bits.SSPIF==1){
-# 130 "I2C_slave.c"
+
+
         if((SSPSTAT&0x20)==0){
 
             addr = SSPBUF;
@@ -7691,7 +7685,6 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
                         Txbuf.idx = 0;
                     }
                 }
-# 158 "I2C_slave.c"
             }
             else{
 
@@ -7702,7 +7695,6 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         else{
 
             if((I2Cstatus==2)&&(Rxbuf.idx<10)){
-
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
                 writePortB(Rxbuf.data[Rxbuf.idx]);
                 Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
@@ -7717,11 +7709,10 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
                 Rxbuf.idx = 0;
             }
         }
-# 197 "I2C_slave.c"
+
         SSPCON1bits.SSPOV = 0;
         SSPCON1bits.WCOL = 0;
         PIR1bits.SSPIF = 0;
         SSPCON1bits.CKP = 1;
-
     }
 }

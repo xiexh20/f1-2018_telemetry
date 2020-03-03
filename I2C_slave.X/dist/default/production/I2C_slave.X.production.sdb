@@ -27,15 +27,15 @@
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\sources\c99\common\Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
-"52 D:\codes\EE5\I2C_slave.X\I2C_slave.c
+"53 D:\codes\EE5\I2C_slave.X\I2C_slave.c
 [v _main main `(v  1 e 1 0 ]
-"78
+"72
 [v _init_Chip init_Chip `(v  1 e 1 0 ]
-"92
+"86
 [v _init_I2C init_I2C `(v  1 e 1 0 ]
-"107
+"101
 [v _writePortB writePortB `(v  1 e 1 0 ]
-"118
+"112
 [v _high_ISR high_ISR `IIH(v  1 e 1 0 ]
 "232 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
 [v _ANSELA ANSELA `VEuc  1 e 1 @3931 ]
@@ -275,43 +275,41 @@
 ]
 [u S57 . 1 `S35 1 . 1 0 `S44 1 . 1 0 `S53 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES57  1 e 1 @4082 ]
-"43 D:\codes\EE5\I2C_slave.X\I2C_slave.c
+"44 D:\codes\EE5\I2C_slave.X\I2C_slave.c
 [v _addr addr `uc  1 e 1 0 ]
-"45
-[v _data_past data_past `uc  1 e 1 0 ]
 [s S24 buffer 11 `[10]uc 1 data 10 0 `uc 1 idx 1 10 ]
-"48
-[v _Txbuf Txbuf `S24  1 e 11 0 ]
 "49
-[v _Rxbuf Rxbuf `S24  1 e 11 0 ]
+[v _Txbuf Txbuf `S24  1 e 11 0 ]
 "50
+[v _Rxbuf Rxbuf `S24  1 e 11 0 ]
+"51
 [v _I2Cstatus I2Cstatus `uc  1 e 1 0 ]
-"52
+"53
 [v _main main `(v  1 e 1 0 ]
 {
-"76
+"70
 } 0
-"92
+"86
 [v _init_I2C init_I2C `(v  1 e 1 0 ]
 {
-"105
+"99
 } 0
-"78
+"72
 [v _init_Chip init_Chip `(v  1 e 1 0 ]
 {
-"90
+"84
 } 0
-"118
+"112
 [v _high_ISR high_ISR `IIH(v  1 e 1 0 ]
 {
-"203
+"167
 } 0
-"107
+"101
 [v _writePortB writePortB `(v  1 e 1 0 ]
 {
 [v writePortB@data data `uc  1 a 1 wreg ]
 [v writePortB@data data `uc  1 a 1 wreg ]
-"109
+"103
 [v writePortB@data data `uc  1 a 1 1 ]
-"112
+"106
 } 0
