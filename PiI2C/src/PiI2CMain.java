@@ -101,18 +101,18 @@ public class PiI2CMain {
 //        byte recv = 0;      // received data
         while(true){
 
-            // send a frame data to PIC
-            for(int i = 0;i<FRAME_LEN;i++)
-            {
-                console.println("########################################");
-                console.println("Sending data["+i+"] to PIC1: "+String.format("0x%02x", data1));
-                device.write(data1);
-                data1++;
-                Thread.sleep(600);
-
+            // send 2 frames to PIC
+            for(int k= 0; k<3; k++) {
+                for (int i = 0; i < FRAME_LEN; i++) {
+                    console.println("########################################");
+                    console.println("Sending data[" + i + "] to PIC1: " + String.format("0x%02x", data1));
+                    device.write(data1);
+                    data1++;
+                    Thread.sleep(300);
+                }
             }
 
-
+            // read one frame from PIC
             for(int i = 0;i<FRAME_LEN;i++)
             {
                 int recv1 = device.read();
