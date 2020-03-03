@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85a73aa7-19bf-4f54-9c3c-a47ee3883376" name="Default Changelist" comment="" />
+    <list default="true" id="85a73aa7-19bf-4f54-9c3c-a47ee3883376" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_master.X/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_master.X/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/I2C_slave.c" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/I2C_slave.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/build/default/production/I2C_slave.i" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/build/default/production/I2C_slave.i" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/build/default/production/I2C_slave.p1" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/build/default/production/I2C_slave.p1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.cmf" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.cmf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.elf" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.elf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.hex" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.hex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.hxl" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.hxl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.lst" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.map" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.mum" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.mum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.o" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.rlf" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.rlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.sdb" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.sdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.sym" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/I2C_slave.X.production.sym" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/memoryfile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/dist/default/production/memoryfile.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../I2C_slave.X/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../I2C_slave.X/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/PiI2C_jar/PiI2C.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/PiI2C_jar/PiI2C.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PiI2C/PiI2CMain.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PiI2C/PiI2CMain.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PiI2CMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PiI2CMain.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,7 +37,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="ProjectId" id="1YX5B6XhRSpRPeeKEQSVOe6FCxm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -22,9 +49,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="D:/Baiduyun Download/pi4j-1.2/lib" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../EE5_UDPServer/f1-2018_telemetry" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -54,6 +82,8 @@
       <option name="presentableId" value="Default" />
       <updated>1583075959720</updated>
       <workItem from="1583075964525" duration="8693000" />
+      <workItem from="1583231531887" duration="2590000" />
+      <workItem from="1583235302694" duration="1342000" />
     </task>
     <servers />
   </component>
@@ -65,9 +95,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="395" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/-1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1583096580428" />
-    <state x="421" y="98" key="FileChooserDialogImpl" timestamp="1583076050775">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="505" y="119" key="FileChooserDialogImpl" timestamp="1583231607988">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="505" y="119" key="FileChooserDialogImpl/-1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1583231607988" />
     <state x="421" y="98" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1583076050775" />
     <state width="1497" height="10" key="GridCell.Tab.0.bottom" timestamp="1583108001156">
       <screen x="0" y="0" width="1536" height="824" />
@@ -90,5 +121,9 @@
     </state>
     <state x="145" y="0" key="SettingsEditor/-1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1583096589689" />
     <state x="121" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1583076053256" />
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog" timestamp="1583235478036">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="477" y="240" key="com.intellij.ide.util.TipDialog/-1920.0.1280.687/0.0.1536.824@0.0.1536.824" timestamp="1583235478036" />
   </component>
 </project>

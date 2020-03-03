@@ -28,8 +28,10 @@ public class PiI2CMain {
     public static final byte TSL2561_POWER_UP = (byte)0x03;
     public static final byte TSL2561_POWER_DOWN = (byte)0x00;
 
-    public static final byte PIC1_ADDR = 0x18;       // address of the PIC
+    public static final byte PIC1_ADDR = 0x20;       // address of the PIC
     public static final byte PIC2_ADDR = 0x20;      // address of the second PIC
+
+    public static final int FRAME_LEN = 10;      // the length of a frame
 
     /**
      * Program Main Entry Point
@@ -66,6 +68,7 @@ public class PiI2CMain {
                 @SuppressWarnings("unused")
                 I2CBus bus = I2CFactory.getInstance(number);
                 console.println("Supported I2C bus " + number + " found");
+
             } catch (IOException exception) {
                 console.println("I/O error on I2C bus " + number + " occurred");
             } catch (I2CFactory.UnsupportedBusNumberException exception) {
@@ -81,6 +84,7 @@ public class PiI2CMain {
 //        I2CDevice device = i2c.getDevice(TSL2561_ADDR);
         I2CDevice device = i2c.getDevice(PIC1_ADDR);
         I2CDevice device2 = i2c.getDevice(PIC2_ADDR);
+        //TODO: get address automatically
 
 
         // next, lets perform am I2C READ operation to the TSL2561 chip
@@ -96,27 +100,40 @@ public class PiI2CMain {
 
 //        byte recv = 0;      // received data
         while(true){
-            console.println("########################################");
-            console.println("Sending to PIC1: "+String.format("0x%02x", data1));
-            device.write(data1);
-            data1++;
-            Thread.sleep(1);
 
-            int recv1 = device.read();
-            console.println("received from PIC1: "+ String.format("0x%02x", recv1));
-            Thread.sleep(400);
+            // send a frame data to PIC
+            for(int i = 0;i<FRAME_LEN;i++)
+            {
+                console.println("########################################");
+                console.println("Sending data["+i+"] to PIC1: "+String.format("0x%02x", data1));
+                device.write(data1);
+                data1++;
+                Thread.sleep(600);
 
-            console.println("-------------------------------------------");
-            console.println("Sending to PIC2, data= "+String.format("0x%02x", data2));
-            device2.write(data2);
-            data2--;
-            Thread.sleep(1);
+            }
 
-            int recv2 = device2.read();
-            console.println("received data from PIC2: "+ String.format("0x%02x", recv2));
-            Thread.sleep(400);
 
-            console.println("");
+            for(int i = 0;i<FRAME_LEN;i++)
+            {
+                int recv1 = device.read();
+                console.println("data["+i+"] from PIC1: "+ String.format("0x%02x", recv1));
+                Thread.sleep(600);
+            }
+
+
+
+            // send data to PIC2
+//            console.println("-------------------------------------------");
+//            console.println("Sending to PIC2, data= "+String.format("0x%02x", data2));
+//            device2.write(data2);
+//            data2--;
+//            Thread.sleep(1);
+//
+//            int recv2 = device2.read();
+//            console.println("received data from PIC2: "+ String.format("0x%02x", recv2));
+//            Thread.sleep(400);
+//
+//            console.println("");
         }
 
 

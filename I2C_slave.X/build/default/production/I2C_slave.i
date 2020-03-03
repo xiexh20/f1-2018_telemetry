@@ -7670,34 +7670,54 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
 {
 
     if(PIR1bits.SSPIF==1){
-
-
-        if(SSPSTATbits.R_nW){
-
-            LATCbits.LATC7 = 1;
-
-            data--;
-            SSPBUF = data;
-            LATA = data;
-        }
-        else{
-
-            LATCbits.LATC7 = 0;
-        }
-
-
+# 130 "I2C_slave.c"
         if((SSPSTAT&0x20)==0){
 
             addr = SSPBUF;
+            LATCbits.LATC7 ^= 1;
+
+
+            if(SSPSTATbits.R_nW){
+                I2Cstatus = 1;
+
+                if((I2Cstatus==1)&&(Txbuf.idx<10))
+                {
+                    SSPBUF = Txbuf.data[Txbuf.idx];
+                    LATA = Txbuf.data[Txbuf.idx];
+                    Txbuf.idx++;
+                    if(Txbuf.idx==10){
+
+                        I2Cstatus = 0;
+                        Txbuf.idx = 0;
+                    }
+                }
+# 158 "I2C_slave.c"
+            }
+            else{
+
+                I2Cstatus = 2;
+            }
+
         }
         else{
 
-            data = SSPBUF;
+            if((I2Cstatus==2)&&(Rxbuf.idx<10)){
+
+                Rxbuf.data[Rxbuf.idx] = SSPBUF;
+                writePortB(Rxbuf.data[Rxbuf.idx]);
+                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
+                Rxbuf.idx++;
+                if(Rxbuf.idx==10){
+                    Rxbuf.idx = 0;
+                    I2Cstatus = 0;
+                }
+            }
+            else{
+                I2Cstatus = 0;
+                Rxbuf.idx = 0;
+            }
         }
-
-
-
-
+# 197 "I2C_slave.c"
         SSPCON1bits.SSPOV = 0;
         SSPCON1bits.WCOL = 0;
         PIR1bits.SSPIF = 0;

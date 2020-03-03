@@ -33,6 +33,8 @@
 [v _init_Chip init_Chip `(v  1 e 1 0 ]
 "92
 [v _init_I2C init_I2C `(v  1 e 1 0 ]
+"107
+[v _writePortB writePortB `(v  1 e 1 0 ]
 "118
 [v _high_ISR high_ISR `IIH(v  1 e 1 0 ]
 "232 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
@@ -168,14 +170,14 @@
 [v _SSPCON1bits SSPCON1bits `VES453  1 e 1 @4038 ]
 "9788
 [v _SSPSTAT SSPSTAT `VEuc  1 e 1 @4039 ]
-[s S269 . 1 `uc 1 . 1 0 :2:0 
+[s S270 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_NOT_W 1 0 :1:2 
 ]
 "10176
-[s S272 . 1 `uc 1 . 1 0 :5:0 
+[s S273 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 D_NOT_A 1 0 :1:5 
 ]
-[s S275 . 1 `uc 1 BF 1 0 :1:0 
+[s S276 . 1 `uc 1 BF 1 0 :1:0 
 `uc 1 UA 1 0 :1:1 
 `uc 1 R_nW 1 0 :1:2 
 `uc 1 S 1 0 :1:3 
@@ -184,7 +186,7 @@
 `uc 1 CKE 1 0 :1:6 
 `uc 1 SMP 1 0 :1:7 
 ]
-[s S284 . 1 `uc 1 BF1 1 0 :1:0 
+[s S285 . 1 `uc 1 BF1 1 0 :1:0 
 `uc 1 UA1 1 0 :1:1 
 `uc 1 I2C_READ 1 0 :1:2 
 `uc 1 I2C_START 1 0 :1:3 
@@ -193,57 +195,57 @@
 `uc 1 CKE1 1 0 :1:6 
 `uc 1 SMP1 1 0 :1:7 
 ]
-[s S293 . 1 `uc 1 . 1 0 :2:0 
+[s S294 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R 1 0 :1:2 
 `uc 1 START 1 0 :1:3 
 `uc 1 STOP 1 0 :1:4 
 `uc 1 DA 1 0 :1:5 
 ]
-[s S299 . 1 `uc 1 . 1 0 :2:0 
+[s S300 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 READ_WRITE 1 0 :1:2 
 `uc 1 START1 1 0 :1:3 
 `uc 1 STOP1 1 0 :1:4 
 `uc 1 DA1 1 0 :1:5 
 ]
-[s S305 . 1 `uc 1 . 1 0 :2:0 
+[s S306 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 RW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 DATA_ADDRESS 1 0 :1:5 
 ]
-[s S310 . 1 `uc 1 . 1 0 :2:0 
+[s S311 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 RW1 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 D_A 1 0 :1:5 
 ]
-[s S315 . 1 `uc 1 . 1 0 :2:0 
+[s S316 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 R_W 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 I2C_DAT 1 0 :1:5 
 ]
-[s S320 . 1 `uc 1 . 1 0 :2:0 
+[s S321 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nW 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nA 1 0 :1:5 
 ]
-[s S325 . 1 `uc 1 . 1 0 :2:0 
+[s S326 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_WRITE 1 0 :1:2 
 ]
-[s S328 . 1 `uc 1 . 1 0 :5:0 
+[s S329 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 NOT_ADDRESS 1 0 :1:5 
 ]
-[s S331 . 1 `uc 1 . 1 0 :2:0 
+[s S332 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 nWRITE 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
 `uc 1 nADDRESS 1 0 :1:5 
 ]
-[s S336 . 1 `uc 1 . 1 0 :2:0 
+[s S337 . 1 `uc 1 . 1 0 :2:0 
 `uc 1 NOT_W 1 0 :1:2 
 ]
-[s S339 . 1 `uc 1 . 1 0 :5:0 
+[s S340 . 1 `uc 1 . 1 0 :5:0 
 `uc 1 NOT_A 1 0 :1:5 
 ]
-[u S342 . 1 `S269 1 . 1 0 `S272 1 . 1 0 `S275 1 . 1 0 `S284 1 . 1 0 `S293 1 . 1 0 `S299 1 . 1 0 `S305 1 . 1 0 `S310 1 . 1 0 `S315 1 . 1 0 `S320 1 . 1 0 `S325 1 . 1 0 `S328 1 . 1 0 `S331 1 . 1 0 `S336 1 . 1 0 `S339 1 . 1 0 ]
-[v _SSPSTATbits SSPSTATbits `VES342  1 e 1 @4039 ]
+[u S343 . 1 `S270 1 . 1 0 `S273 1 . 1 0 `S276 1 . 1 0 `S285 1 . 1 0 `S294 1 . 1 0 `S300 1 . 1 0 `S306 1 . 1 0 `S311 1 . 1 0 `S316 1 . 1 0 `S321 1 . 1 0 `S326 1 . 1 0 `S329 1 . 1 0 `S332 1 . 1 0 `S337 1 . 1 0 `S340 1 . 1 0 ]
+[v _SSPSTATbits SSPSTATbits `VES343  1 e 1 @4039 ]
 "10386
 [v _SSPADD SSPADD `VEuc  1 e 1 @4040 ]
 "10724
@@ -273,9 +275,7 @@
 ]
 [u S57 . 1 `S35 1 . 1 0 `S44 1 . 1 0 `S53 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES57  1 e 1 @4082 ]
-"42 D:\codes\EE5\I2C_slave.X\I2C_slave.c
-[v _data data `uc  1 e 1 0 ]
-"43
+"43 D:\codes\EE5\I2C_slave.X\I2C_slave.c
 [v _addr addr `uc  1 e 1 0 ]
 "45
 [v _data_past data_past `uc  1 e 1 0 ]
@@ -284,6 +284,8 @@
 [v _Txbuf Txbuf `S24  1 e 11 0 ]
 "49
 [v _Rxbuf Rxbuf `S24  1 e 11 0 ]
+"50
+[v _I2Cstatus I2Cstatus `uc  1 e 1 0 ]
 "52
 [v _main main `(v  1 e 1 0 ]
 {
@@ -302,5 +304,14 @@
 "118
 [v _high_ISR high_ISR `IIH(v  1 e 1 0 ]
 {
-"156
+"203
+} 0
+"107
+[v _writePortB writePortB `(v  1 e 1 0 ]
+{
+[v writePortB@data data `uc  1 a 1 wreg ]
+[v writePortB@data data `uc  1 a 1 wreg ]
+"109
+[v writePortB@data data `uc  1 a 1 1 ]
+"112
 } 0

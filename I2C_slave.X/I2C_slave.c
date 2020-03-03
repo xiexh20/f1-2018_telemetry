@@ -120,32 +120,79 @@ void __interrupt (high_priority) high_ISR(void)
 //    LATBbits.LATB5 ^= 1;
     if(PIR1bits.SSPIF==1){
         // serial transmission interrupt
-
-        if(SSPSTATbits.R_nW){
-            // slave transmission mode: send data out
-            LATCbits.LATC7 = 1;
-            
-            data--;
-            SSPBUF = data;  // send data out
-            LATA = data;
-        }
-        else{
-            // slave reception mode: read data from the SSPBUF
-            LATCbits.LATC7 = 0;
-        }
-
-
+        
+//        if(I2Cstatus==I2CRxing){
+//            data = SSPBUF;
+//            writePortB(data);
+//            I2Cstatus = IDLE;
+//        }
+        
         if((SSPSTAT&BIT5)==0){
             // an address byte is received
-            addr = SSPBUF;
+            addr = SSPBUF;      // every time when the master calls read/write method, the address will be sent out
+            LATCbits.LATC7 ^= 1;    // test the frequency of received address
+            
+            // the address byte will be sent when never the master can read() method)
+            if(SSPSTATbits.R_nW){
+                I2Cstatus = I2CTxing; // slave transmission mode: send data out
+                
+                if((I2Cstatus==I2CTxing)&&(Txbuf.idx<FRAME_LEN))
+                {
+                    SSPBUF = Txbuf.data[Txbuf.idx];
+                    LATA = Txbuf.data[Txbuf.idx];
+                    Txbuf.idx++;
+                    if(Txbuf.idx==FRAME_LEN){
+                        // one frame transmission finished
+                        I2Cstatus = IDLE;
+                        Txbuf.idx = 0;      // reset 
+                    }
+                }
+//                else{
+//                    I2Cstatus = IDLE;
+//                    Txbuf.idx = 0;      // reset to the start
+//                }
+//                sent--;
+//                SSPBUF = sent;  // send data out
+//                LATA = sent;
+//                I2Cstatus = I2CRxing;
+            }
+            else{
+                // slave reception mode
+                I2Cstatus = I2CRxing;   
+            }
+            
         }
         else{
             // a data byte is received
-            data = SSPBUF;
+            if((I2Cstatus==I2CRxing)&&(Rxbuf.idx<FRAME_LEN)){
+//                data = SSPBUF;
+                Rxbuf.data[Rxbuf.idx] = SSPBUF;
+                writePortB(Rxbuf.data[Rxbuf.idx]);
+                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
+                Rxbuf.idx++;
+                if(Rxbuf.idx==FRAME_LEN){
+                    Rxbuf.idx = 0;  // a frame has been transmitted
+                    I2Cstatus = IDLE;
+                }
+            }
+            else{
+                I2Cstatus = IDLE;
+                Rxbuf.idx = 0;      // clear to the start
+            }
         }
         
-//        writePortB(addr);
-//        writePortB(SSPSTAT);
+        
+
+
+//        if((SSPSTAT&BIT5)==0){
+//            // an address byte is received
+//            addr = SSPBUF;
+//        }
+//        else{
+//            // a data byte is received
+//            data = SSPBUF;
+//        }
+        
         
         SSPCON1bits.SSPOV = 0; // Clear the overflow flag
         SSPCON1bits.WCOL = 0;  // Clear the collision bit
