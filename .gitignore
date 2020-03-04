@@ -1,1 +1,7 @@
 /TestRemote/target/
+/TestRemoteAnt/nbproject/private/
+/TestRemoteAnt/dist/
+/TestRemoteAnt/build/
+/RemotePiI2C/nbproject/private/
+/RemotePiI2C/build/
+/RemotePiI2C/dist/

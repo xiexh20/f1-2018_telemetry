@@ -10,14 +10,14 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="file://D:/Baiduyun Download/pi4j-1.2/lib" />
+          <root url="file://$MODULE_DIR$/../../Java/pi4j-1.2/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://D:/Baiduyun Download/pi4j-1.2/lib" />
+          <root url="file://$MODULE_DIR$/../../Java/pi4j-1.2/lib" />
         </SOURCES>
-        <jarDirectory url="file://D:/Baiduyun Download/pi4j-1.2/lib" recursive="false" />
-        <jarDirectory url="file://D:/Baiduyun Download/pi4j-1.2/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../../Java/pi4j-1.2/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../Java/pi4j-1.2/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
