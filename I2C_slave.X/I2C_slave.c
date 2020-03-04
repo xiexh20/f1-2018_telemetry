@@ -38,6 +38,7 @@ typedef struct buffer{
 
 void init_Chip();
 void init_I2C();
+void init_ADC();
 void writePortB(unsigned char data);
 
 unsigned char data = 0;
@@ -54,6 +55,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
+    init_ADC();
     
     // init buffer
     Txbuf.idx = 0;
@@ -64,15 +66,15 @@ void main(void)
     LATA = 0;
     while(1)
     {
-        __delay_ms(1); 
-        
+        __delay_us(100); 
+        ADCON0bits.GODONE = 1;      // start ADC
     }
 }
 
 void init_Chip()
 {
     LATA = 0x00; //Initial PORTA
-    TRISA = 0x00; //
+    TRISA = 0x01; // set PORTA as input
     ADCON1 = 0x00; //AD voltage reference
     ANSELA = 0x00; // define analog or digital
     CM1CON0 = 0x00; //Turn off Comparator
@@ -103,6 +105,13 @@ void writePortB(unsigned char data)
     LATB = data;
     LATCbits.LATC1 = (data>>2)&BIT0;
     LATCbits.LATC2 = (data>>1)&BIT0;
+}
+
+void init_ADC()
+{
+    ADCON0 = 0x01;  // select channel 0 for AN0 and enable ADC
+    ADCON1 = 0x00;  // select reference voltage 0V and 5V, enable AN0
+    ADCON2 = 0x08;  // left justified, 8-bit result in ADRESH, 2-bit in ADSREL
 }
 
 
@@ -146,7 +155,7 @@ void __interrupt (high_priority) high_ISR(void)
             if((I2Cstatus==I2CRxing)&&(Rxbuf.idx<FRAME_LEN)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
                 writePortB(Rxbuf.data[Rxbuf.idx]);
-                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
+//                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
                 Rxbuf.idx++;
                 if(Rxbuf.idx==FRAME_LEN){
                     Rxbuf.idx = 0;  // a frame has been transmitted
@@ -163,5 +172,12 @@ void __interrupt (high_priority) high_ISR(void)
         SSPCON1bits.WCOL = 0;  // Clear the collision bit
         PIR1bits.SSPIF = 0;     // don't forget to clear flag
         SSPCON1bits.CKP = 1;        // set CKP bit manually(ACK to master)
+    }
+    
+    if(PIR1bits.ADIF==1){
+        // ADC interrupt
+        PIR1bits.ADIF = 0;    // clear flag
+        Txbuf.data[0] = ADRESH;        // read the result: high byte
+        Txbuf.data[1] = ADRESL;         // read the result: low byte
     }
 }

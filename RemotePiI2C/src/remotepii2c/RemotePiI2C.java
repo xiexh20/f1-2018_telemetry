@@ -23,10 +23,13 @@ public class RemotePiI2C {
     /**
      * @param args the command line arguments
      */
-        public static final byte PIC1_ADDR = 0x20;       // address of the PIC
-    public static final byte PIC2_ADDR = 0x20;      // address of the second PIC
+    
+    private static final byte PIC1_ADDR = 0x20;       // address of the PIC
+    private static final byte PIC2_ADDR = 0x20;      // address of the second PIC
 
-    public static final int FRAME_LEN = 10;      // the length of a frame
+    private static final int FRAME_LEN = 10;      // the length of a frame
+    private final static int MAXADCRESULT = 956;
+    private final static int MINADCRESULT = 40;
 
     /**
      * Program Main Entry Point
@@ -92,28 +95,43 @@ public class RemotePiI2C {
 //        console.println("... powering up TSL2561");
         byte data1 = 0;
         byte data2 = 0b1111111;
+        
+        int[] recv_buf = new int[FRAME_LEN];
 
 //        byte recv = 0;      // received data
         while(true){
 
             // send 2 frames to PIC
-            for(int k= 0; k<3; k++) {
-                for (int i = 0; i < FRAME_LEN; i++) {
-                    console.println("########################################");
-                    console.println("Sending data[" + i + "] to PIC1: " + String.format("0x%02x", data1));
-                    device.write(data1);
-                    data1++;
-                    Thread.sleep(300);
-                }
-            }
+//            for(int k= 0; k<3; k++) {
+//                for (int i = 0; i < FRAME_LEN; i++) {
+//                    console.println("########################################");
+//                    console.println("Sending data[" + i + "] to PIC1: " + String.format("0x%02x", data1));
+//                    device.write(data1);
+//                    data1++;
+//                    Thread.sleep(300);
+//                }
+//            }
 
             // read one frame from PIC
+            
             for(int i = 0;i<FRAME_LEN;i++)
             {
-                int recv1 = device.read();
-                console.println("data["+i+"] from PIC1: "+ String.format("0x%02x", recv1));
-                Thread.sleep(600);
+                recv_buf[i] = device.read();
+//                int recv1 = 
+//                if(i==0){
+//                    console.println("ADCRESH = "+ String.format("0x%02x", recv1));
+//                }
+//                else if(i==1){
+//                    console.println("ADCRESL = "+ String.format("0x%02x", recv1));
+//                    console.println("######################################");
+//                }
+                Thread.sleep(1);
             }
+            
+            
+            int ADCresult = 4*recv_buf[0] + recv_buf[1]/64;
+            double degree = 135 - 270.0*(ADCresult-MINADCRESULT)/(MAXADCRESULT-MINADCRESULT);
+            console.println("ADC result = "+ ADCresult + ", Degree = "+ degree);
         }
     }
     

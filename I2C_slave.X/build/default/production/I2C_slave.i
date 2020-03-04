@@ -7589,6 +7589,7 @@ typedef struct buffer{
 
 void init_Chip();
 void init_I2C();
+void init_ADC();
 void writePortB(unsigned char data);
 
 unsigned char data = 0;
@@ -7605,6 +7606,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
+    init_ADC();
 
 
     Txbuf.idx = 0;
@@ -7615,15 +7617,15 @@ void main(void)
     LATA = 0;
     while(1)
     {
-        _delay((unsigned long)((1)*(48000000/4000.0)));
-
+        _delay((unsigned long)((100)*(48000000/4000000.0)));
+        ADCON0bits.GODONE = 1;
     }
 }
 
 void init_Chip()
 {
     LATA = 0x00;
-    TRISA = 0x00;
+    TRISA = 0x01;
     ADCON1 = 0x00;
     ANSELA = 0x00;
     CM1CON0 = 0x00;
@@ -7654,6 +7656,13 @@ void writePortB(unsigned char data)
     LATB = data;
     LATCbits.LATC1 = (data>>2)&0x01;
     LATCbits.LATC2 = (data>>1)&0x01;
+}
+
+void init_ADC()
+{
+    ADCON0 = 0x01;
+    ADCON1 = 0x00;
+    ADCON2 = 0x08;
 }
 
 
@@ -7697,7 +7706,7 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
             if((I2Cstatus==2)&&(Rxbuf.idx<10)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
                 writePortB(Rxbuf.data[Rxbuf.idx]);
-                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
+
                 Rxbuf.idx++;
                 if(Rxbuf.idx==10){
                     Rxbuf.idx = 0;
@@ -7714,5 +7723,12 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
         SSPCON1bits.WCOL = 0;
         PIR1bits.SSPIF = 0;
         SSPCON1bits.CKP = 1;
+    }
+
+    if(PIR1bits.ADIF==1){
+
+        PIR1bits.ADIF = 0;
+        Txbuf.data[0] = ADRESH;
+        Txbuf.data[1] = ADRESL;
     }
 }
