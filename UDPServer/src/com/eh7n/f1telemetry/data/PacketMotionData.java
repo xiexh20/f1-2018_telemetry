@@ -5,8 +5,15 @@ import java.util.List;
 import com.eh7n.f1telemetry.data.elements.CarMotionData;
 import com.eh7n.f1telemetry.data.elements.WheelData;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PacketMotionData extends Packet {
-	
+    
+    	private static final Logger log = LoggerFactory.getLogger(PacketMotionData.class);
+
+		byte LED_direction;
+	float f_WheelsAngle;
 	private List<CarMotionData> carMotionDataList;
 	private WheelData<Float> suspensionPosition;
 	private WheelData<Float> suspensionVelocity;
@@ -152,6 +159,36 @@ public class PacketMotionData extends Packet {
 
 	public void setFrontWheelsAngle(float frontWheelsAngle) {
 		this.frontWheelsAngle = frontWheelsAngle;
+	}
+        
+        @Override
+	public void demo(){
+		//CarTelemetryData ctd = null;
+		//int i = 0;
+
+		float f_WheelsAngle = getFrontWheelsAngle();
+
+		//log.trace("speed: "+speed+"\n"+"Brake: "+brake+"\n"+"Throttle: "+throttle+"\n"+"Clutch: "+clutch+"\n"+"Gear: "+gear+"\n");
+		log.trace("FrontWheelsAngle: "+ f_WheelsAngle);
+	}
+        
+        @Override
+	public byte convert_direction_to_byte(){
+		if(f_WheelsAngle<0)
+		{
+			LED_direction = 2;
+		}
+		else if(f_WheelsAngle>0)
+		{
+			LED_direction = 1;
+		}
+		else if(f_WheelsAngle==0)
+		{
+			LED_direction = 0;
+		}
+		String binaryString_LED_direction = Integer.toBinaryString(LED_direction);
+		System.out.println("binaryString_LED_direction = " + binaryString_LED_direction);
+		return LED_direction;
 	}
 	
 }

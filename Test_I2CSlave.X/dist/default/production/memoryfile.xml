@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <executable name="dist/default/production\Test_I2CSlave.X.production.hex">
+    <memory name="program">
+      <units>bytes</units>
+      <length>28672</length>
+      <used>747</used>
+      <free>27925</free>
+    </memory>
+    <memory name="data">
+      <units>bytes</units>
+      <length>2048</length>
+      <used>37</used>
+      <free>2011</free>
+    </memory>
+  </executable>
+</project>

@@ -32,5 +32,20 @@ public abstract class Packet {
             return this.header.toString();
             
         }
+        
+        public byte convert_brake_to_byte(){
+		return 0;
+	}
+	public byte convert_throttle_to_byte(){
+		return 0;
+	}
+	public byte convert_direction_to_byte(){
+		return 0;
+	}
+        
+        public void demo(){
+            // TODO: child classes implement this function
+	}
+
 
 }

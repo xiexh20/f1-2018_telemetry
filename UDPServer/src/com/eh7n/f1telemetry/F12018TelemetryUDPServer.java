@@ -14,6 +14,10 @@ import org.slf4j.LoggerFactory;
 
 import com.eh7n.f1telemetry.data.Packet;
 import com.eh7n.f1telemetry.util.PacketDeserializer;
+import com.pi4j.io.i2c.I2CFactory;
+import com.pi4j.platform.PlatformAlreadyAssignedException;
+import java.util.logging.Level;
+
 
 /**
  * The base class for the F1 2018 Telemetry app. Starts up a non-blocking I/O
@@ -140,7 +144,22 @@ public class F12018TelemetryUDPServer {
 							.consumeWith((p) -> {
 //									log.trace(p.toJSON());
                                                                         System.out.println(p.toString());
+                                                                        System.out.println("Trying to execute I2C code...");
+                    try {
+                        RemotePiI2C.RunI2C();
+                        System.out.println("I2C execution ");
+                    } catch (InterruptedException ex) {
+                        java.util.logging.Logger.getLogger(F12018TelemetryUDPServer.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (PlatformAlreadyAssignedException ex) {
+                        java.util.logging.Logger.getLogger(F12018TelemetryUDPServer.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        java.util.logging.Logger.getLogger(F12018TelemetryUDPServer.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (I2CFactory.UnsupportedBusNumberException ex) {
+                        java.util.logging.Logger.getLogger(F12018TelemetryUDPServer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
 								})
 							.start();
+            
+                
 	}
 }
