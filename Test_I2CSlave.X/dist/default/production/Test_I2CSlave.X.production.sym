@@ -225,7 +225,7 @@ bssCOMRAM 1 25 COMRAM 1 1
 %locals
 dist/default/production\Test_I2CSlave.X.production.o
 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
-C:\Users\25691\AppData\Local\Temp\sbng.s
+C:\Users\25691\AppData\Local\Temp\sna4.s
 578 12AC 0 CODE 0
 580 12AC 0 CODE 0
 583 12AC 0 CODE 0
@@ -297,7 +297,7 @@ Test_I2CSlave.c
 88 12A4 0 CODE 0
 89 12A8 0 CODE 0
 90 12AA 0 CODE 0
-C:\Users\25691\AppData\Local\Temp\sbng.s
+C:\Users\25691\AppData\Local\Temp\sna4.s
 1397 1008 0 CODE 0
 Test_I2CSlave.c
 130 1008 0 CODE 0

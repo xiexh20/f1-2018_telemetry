@@ -1012,8 +1012,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;Test_I2CSlave.c: 96:     TRISBbits.TRISB1 = 1;
 [e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
 "98
-[; ;Test_I2CSlave.c: 98:     SSPADD = 0x40;
-[e = _SSPADD -> -> 64 `i `uc ]
+[; ;Test_I2CSlave.c: 98:     SSPADD = 0x50;
+[e = _SSPADD -> -> 80 `i `uc ]
 "99
 [; ;Test_I2CSlave.c: 99:     SSPCON1 = 0x36;
 [e = _SSPCON1 -> -> 54 `i `uc ]

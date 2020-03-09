@@ -1,7 +1,8 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template in the editor
+ * test the maximum speed of I2C, with two devices
  */
 package remotepii2c;
 
@@ -24,7 +25,7 @@ public class RemotePiI2C {
      * @param args the command line arguments
      */
     
-    private static final byte PIC1_ADDR = 0x20;       // address of the PIC
+    private static final byte PIC1_ADDR = 0x18;       // address of the PIC
     private static final byte PIC2_ADDR = 0x20;      // address of the second PIC
 
     private static final int FRAME_LEN = 10;      // the length of a frame
@@ -85,54 +86,42 @@ public class RemotePiI2C {
         //TODO: get address automatically
 
 
-        // next, lets perform am I2C READ operation to the TSL2561 chip
-        // we will read the 'ID' register from the chip to get its part number and silicon revision number
-//        console.println("... reading ID register from TSL2561");
-//        int response = device.read(TSL2561_REG_ID);
-//        console.println("TSL2561 ID = " + String.format("0x%02x", response) + " (should be 0x50)");
-
-        // next we want to start taking light measurements, so we need to power up the sensor
-//        console.println("... powering up TSL2561");
+        
         byte data1 = 0;
         byte data2 = 0b1111111;
         
-        int[] recv_buf = new int[FRAME_LEN];
-
-//        byte recv = 0;      // received data
         while(true){
-
-            // send 2 frames to PIC
-//            for(int k= 0; k<3; k++) {
-//                for (int i = 0; i < FRAME_LEN; i++) {
-//                    console.println("########################################");
-//                    console.println("Sending data[" + i + "] to PIC1: " + String.format("0x%02x", data1));
-//                    device.write(data1);
-//                    data1++;
-//                    Thread.sleep(300);
-//                }
-//            }
-
-            // read one frame from PIC
-            
-            for(int i = 0;i<FRAME_LEN;i++)
-            {
-                recv_buf[i] = device.read();
-//                int recv1 = 
-//                if(i==0){
-//                    console.println("ADCRESH = "+ String.format("0x%02x", recv1));
-//                }
-//                else if(i==1){
-//                    console.println("ADCRESL = "+ String.format("0x%02x", recv1));
-//                    console.println("######################################");
-//                }
-                Thread.sleep(1);
+            //send a frame to device 1
+            console.println("###########################################");
+            for(int i=0;i<FRAME_LEN;i++){
+                console.println("Sending to device1: data[" +i +"]=" + String.format("0x%02x", data1));
+                device.write(data1);
+                data1++;
             }
+            //read a frame from device 1
+            console.println("-----------------------------------------");
+            for(int i=0;i<FRAME_LEN;i++){
+                int recv = device.read();
+                console.println("Receive from device1: data[" +i +"]=" + String.format("0x%02x", recv));
+            }
+            Thread.sleep(100);
             
-            
-            int ADCresult = 4*recv_buf[0] + recv_buf[1]/64;
-            double degree = 135 - 270.0*(ADCresult-MINADCRESULT)/(MAXADCRESULT-MINADCRESULT);
-            console.println("ADC result = "+ ADCresult + ", Degree = "+ degree);
+            console.println("*************************************************");
+            for(int i=0;i<FRAME_LEN;i++){
+                console.println("Sending to device2: data[" +i +"]=" + String.format("0x%02x", data2));
+                device2.write(data2);
+                data2--;
+            }
+            //read a frame from device 1
+            console.println("-----------------------------------------");
+            for(int i=0;i<FRAME_LEN;i++){
+                int recv = device2.read();
+                console.println("Receive from device2: data[" +i +"]=" + String.format("0x%02x", recv));
+            }
+            Thread.sleep(100);
         }
+        
+        
     }
     
 }

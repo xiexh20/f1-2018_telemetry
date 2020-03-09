@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Thu Mar 05 16:24:57 2020
+                                                                                               Sat Mar 07 17:12:33 2020
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1 
      1                           	processor	18F25K50
@@ -502,8 +502,8 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og1
    487                           ;Test_I2CSlave.c: 96:     TRISBbits.TRISB1 = 1;
    488  0012D6  8293               	bsf	147,1,c	;volatile
    489  0012D8                     
-   490                           ;Test_I2CSlave.c: 98:     SSPADD = 0x40;
-   491  0012D8  0E40               	movlw	64
+   490                           ;Test_I2CSlave.c: 98:     SSPADD = 0x50;
+   491  0012D8  0E50               	movlw	80
    492  0012DA  6EC8               	movwf	200,c	;volatile
    493                           
    494                           ;Test_I2CSlave.c: 99:     SSPCON1 = 0x36;
@@ -1057,7 +1057,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Thu Mar 05 16:24:57 2020
+Symbol Table                                                                                   Sat Mar 07 17:12:33 2020
 
          writePortB@data 0022              _SSPSTATbits 000FC7                       l83 12AA  
                      l86 12EC                       l89 121C                       u15 114A  

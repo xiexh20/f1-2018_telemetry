@@ -7646,7 +7646,7 @@ void init_I2C()
     TRISBbits.TRISB0 = 1;
     TRISBbits.TRISB1 = 1;
 
-    SSPADD = 0x40;
+    SSPADD = 0x50;
     SSPCON1 = 0x36;
     SSPSTAT = 0x80;
     SSPCON2 = 0x01;

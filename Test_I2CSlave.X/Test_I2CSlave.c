@@ -9,7 +9,7 @@
 #include <xc.h>
 
 
-#define SLAVE_ADDR 0x40
+#define SLAVE_ADDR 0x50
 #define _XTAL_FREQ 48000000   // define Fosc frequency in order to use delay function
 
 #define IDLE 0

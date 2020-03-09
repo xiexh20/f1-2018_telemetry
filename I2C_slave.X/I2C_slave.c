@@ -9,7 +9,7 @@
 #include <xc.h>
 
 
-#define SLAVE_ADDR 0x40
+#define SLAVE_ADDR 0x30
 #define _XTAL_FREQ 48000000   // define Fosc frequency in order to use delay function
 
 #define IDLE 0
@@ -55,7 +55,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
-    init_ADC();
+//    init_ADC();
     
     // init buffer
     Txbuf.idx = 0;
@@ -135,7 +135,7 @@ void __interrupt (high_priority) high_ISR(void)
                 if((I2Cstatus==I2CTxing)&&(Txbuf.idx<FRAME_LEN))
                 {
                     SSPBUF = Txbuf.data[Txbuf.idx];
-                    LATA = Txbuf.data[Txbuf.idx];
+//                    LATA = Txbuf.data[Txbuf.idx];
                     Txbuf.idx++;
                     if(Txbuf.idx==FRAME_LEN){
                         // one frame transmission finished
@@ -154,8 +154,8 @@ void __interrupt (high_priority) high_ISR(void)
             // a data byte is received
             if((I2Cstatus==I2CRxing)&&(Rxbuf.idx<FRAME_LEN)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
-                writePortB(Rxbuf.data[Rxbuf.idx]);
-//                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
+//                writePortB(Rxbuf.data[Rxbuf.idx]);
+                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];       // save data to transmission buffer
                 Rxbuf.idx++;
                 if(Rxbuf.idx==FRAME_LEN){
                     Rxbuf.idx = 0;  // a frame has been transmitted

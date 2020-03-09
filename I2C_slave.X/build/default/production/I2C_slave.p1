@@ -10,9 +10,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "40
 [; ;I2C_slave.c: 40: void init_I2C();
 [v _init_I2C `(v ~T0 @X0 0 e? ]
-"41
-[; ;I2C_slave.c: 41: void init_ADC();
-[v _init_ADC `(v ~T0 @X0 0 e? ]
 "12422 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 12422:     struct {
 [s S584 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -939,9 +936,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "57
 [; ;I2C_slave.c: 57:     init_I2C();
 [e ( _init_I2C ..  ]
-"58
-[; ;I2C_slave.c: 58:     init_ADC();
-[e ( _init_ADC ..  ]
 "61
 [; ;I2C_slave.c: 61:     Txbuf.idx = 0;
 [e = . _Txbuf 1 -> -> 0 `i `uc ]
@@ -1036,8 +1030,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;I2C_slave.c: 92:     TRISBbits.TRISB1 = 1;
 [e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
 "94
-[; ;I2C_slave.c: 94:     SSPADD = 0x40;
-[e = _SSPADD -> -> 64 `i `uc ]
+[; ;I2C_slave.c: 94:     SSPADD = 0x30;
+[e = _SSPADD -> -> 48 `i `uc ]
 "95
 [; ;I2C_slave.c: 95:     SSPCON1 = 0x36;
 [e = _SSPCON1 -> -> 54 `i `uc ]
@@ -1143,9 +1137,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "137
 [; ;I2C_slave.c: 137:                     SSPBUF = Txbuf.data[Txbuf.idx];
 [e = _SSPBUF *U + &U . _Txbuf 0 * -> . _Txbuf 1 `ux -> -> # *U &U . _Txbuf 0 `ui `ux ]
-"138
-[; ;I2C_slave.c: 138:                     LATA = Txbuf.data[Txbuf.idx];
-[e = _LATA *U + &U . _Txbuf 0 * -> . _Txbuf 1 `ux -> -> # *U &U . _Txbuf 0 `ui `ux ]
 "139
 [; ;I2C_slave.c: 139:                     Txbuf.idx++;
 [e ++ . _Txbuf 1 -> -> 1 `i `uc ]
@@ -1197,9 +1188,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "156
 [; ;I2C_slave.c: 156:                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
 [e = *U + &U . _Rxbuf 0 * -> . _Rxbuf 1 `ux -> -> # *U &U . _Rxbuf 0 `ui `ux _SSPBUF ]
-"157
-[; ;I2C_slave.c: 157:                 writePortB(Rxbuf.data[Rxbuf.idx]);
-[e ( _writePortB (1 *U + &U . _Rxbuf 0 * -> . _Rxbuf 1 `ux -> -> # *U &U . _Rxbuf 0 `ui `ux ]
+"158
+[; ;I2C_slave.c: 158:                 Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
+[e = *U + &U . _Txbuf 0 * -> . _Rxbuf 1 `ux -> -> # *U &U . _Txbuf 0 `ui `ux *U + &U . _Rxbuf 0 * -> . _Rxbuf 1 `ux -> -> # *U &U . _Rxbuf 0 `ui `ux ]
 "159
 [; ;I2C_slave.c: 159:                 Rxbuf.idx++;
 [e ++ . _Rxbuf 1 -> -> 1 `i `uc ]

@@ -7606,7 +7606,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
-    init_ADC();
+
 
 
     Txbuf.idx = 0;
@@ -7642,7 +7642,7 @@ void init_I2C()
     TRISBbits.TRISB0 = 1;
     TRISBbits.TRISB1 = 1;
 
-    SSPADD = 0x40;
+    SSPADD = 0x30;
     SSPCON1 = 0x36;
     SSPSTAT = 0x80;
     SSPCON2 = 0x01;
@@ -7686,7 +7686,7 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
                 if((I2Cstatus==1)&&(Txbuf.idx<10))
                 {
                     SSPBUF = Txbuf.data[Txbuf.idx];
-                    LATA = Txbuf.data[Txbuf.idx];
+
                     Txbuf.idx++;
                     if(Txbuf.idx==10){
 
@@ -7705,8 +7705,8 @@ void __attribute__((picinterrupt(("high_priority")))) high_ISR(void)
 
             if((I2Cstatus==2)&&(Rxbuf.idx<10)){
                 Rxbuf.data[Rxbuf.idx] = SSPBUF;
-                writePortB(Rxbuf.data[Rxbuf.idx]);
 
+                Txbuf.data[Rxbuf.idx] = Rxbuf.data[Rxbuf.idx];
                 Rxbuf.idx++;
                 if(Rxbuf.idx==10){
                     Rxbuf.idx = 0;
