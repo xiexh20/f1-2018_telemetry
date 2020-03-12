@@ -158,11 +158,7 @@ public class F1_output {
                     p.convert_throttle_to_byte();
                     p.convert_direction_to_byte();
 
-                    //log.trace(p.toJSON());
-                    // toJSON is a string
-                    //json = "";
-                    //json = mapper.writeValueAsString(this);//this is packet
-                    //it just print the packet(because it needs to be converted to string first)
+                    
                 })
                 .start();
     }
