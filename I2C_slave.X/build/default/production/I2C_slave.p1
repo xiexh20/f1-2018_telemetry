@@ -10,6 +10,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "40
 [; ;I2C_slave.c: 40: void init_I2C();
 [v _init_I2C `(v ~T0 @X0 0 e? ]
+"41
+[; ;I2C_slave.c: 41: void init_ADC();
+[v _init_ADC `(v ~T0 @X0 0 e? ]
 "12422 C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h
 [; ;C:\Program Files (x86)\Microchip\xc8\v2.10\pic\include\pic18f25k50.h: 12422:     struct {
 [s S584 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -936,6 +939,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "57
 [; ;I2C_slave.c: 57:     init_I2C();
 [e ( _init_I2C ..  ]
+"58
+[; ;I2C_slave.c: 58:     init_ADC();
+[e ( _init_ADC ..  ]
 "61
 [; ;I2C_slave.c: 61:     Txbuf.idx = 0;
 [e = . _Txbuf 1 -> -> 0 `i `uc ]

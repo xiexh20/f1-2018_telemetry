@@ -7606,7 +7606,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
-
+    init_ADC();
 
 
     Txbuf.idx = 0;

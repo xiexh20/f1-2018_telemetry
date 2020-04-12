@@ -55,7 +55,7 @@ void main(void)
 {
     init_Chip();
     init_I2C();
-//    init_ADC();
+    init_ADC();
     
     // init buffer
     Txbuf.idx = 0;
